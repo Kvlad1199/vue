@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Task 5</title>
+</head>
+
+<body>
+
+	<h1><a href="index.html">Home</a></h1>
+
+	<div id="app">
+		<div>
+			<label for="">
+				Login:
+				<input type="text" v-model="inputLogin">
+			</label>
+		</div>
+		<div>
+			<label for="">
+				Password:
+				<input type="password" v-model="inputPassword">
+			</label>
+		</div>
+		<button @click="getAnswear">Go</button>
+		<div>{{message}}</div>
+	</div>
+	<script>
+		//Задача 5.Додаток містить масив об’єктів (логін, пароль) --  інсуючі логіни і паролі. Користувач вводить логін і пароль, а програма повідомляє чи може користувач бути авторизованим (чи є він одним з масиву). 
+
+		const data = [
+			{
+				login: "login111",
+				password: "pass1"
+			},
+			{
+				login: "login222",
+				password: "pass2"
+			},
+			{
+				login: "login333",
+				password: "pass3"
+			},
+			{
+				login: "login444",
+				password: "pass4"
+			},
+		]
+		const { createApp } = Vue
+
+		createApp({
+			data() {
+				return {
+					inputLogin: null,
+					inputPassword: null,
+					message: null,
+				}
+			},
+
+			computed: {
+				checkUser() {
+					return data.find(
+						(el) => el.login === this.inputLogin && el.password === this.inputPassword
+					)
+				}
+			},
+			methods: {
+				getAnswear() {
+					if (this.checkUser) { this.message = "Такий користувач існує" }
+					else { this.message = "Такого користувача не існує" }
+				}
+			}
+		}).mount('#app')
+	</script>
+</body>
+
+</html>

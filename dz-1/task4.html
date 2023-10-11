@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Task 4</title>
+</head>
+
+<body>
+	<h1><a href="index.html">Home</a></h1>
+	<div id="app">
+		<div>
+			Сума на рахунку: <span :style="colorBalance">{{showBalance}}</span>
+		</div>
+		<div>
+			<input type="number" v-model='inputMoney'>
+		</div>
+		<div>
+
+			<button @click="addMoney">Зарахувати</button>
+			<button @click="withdrawMoney">Зняти</button>
+
+		</div>
+		<div>
+			Відсотки за обслуговування: {{percentServiceInteres}} грн
+		</div>
+		<hr>
+		<div :style="colorDollar">
+			Сума у доларах: {{dollarSum}}
+		</div>
+		<div :style="colorEvro">
+			Сума у євро: {{evroSum}}
+		</div>
+		<div style="color: red;font-size: 24px;">{{errorMessage}}</div>
+	</div>
+	<script>
+
+
+		// Задача 4. “Рахунок у банку”
+		// Вимоги:
+		// 1) Спочатку сума дорівнює 0грн. Змінити суму у гривнях можна або зарахуванням на рахунок, або зняттям.
+		// 2) Сума автоматично переводиться у долари та євро (фіксований курс задається у data).
+		// 3) можливість зарахувати суму (контролювати, щоб не була від’ємною)
+		// 4) можливість зняти (щоб не можна зняти більше ніж є на рахунку)
+		// 5) при виконанні зняття і зарахування коштів вираховувати 3% від суми (відображати кількість відсотків автоматично)
+
+		// При зміні суми :
+		// - якщо було зняття, то суму відоражати червоним
+		// - якщо було зарахування, то суму відображати зеленим
+		// Якщо сума валюти менша за 100 то відображати червоним кольором, інакше - зеленим
+
+
+		const { createApp } = Vue
+		const dollarRate = 36.5
+		const evroRate = 38
+
+		createApp({
+			data() {
+				return {
+					balance: 0,
+					inputMoney: null,
+					errorMessage: null,
+					colorBalance: 'color: white'
+				}
+			},
+
+			methods: {
+				addMoney() {
+					if (this.inputMoney < 0) {
+						this.errorMessage = 'Введіть будь ласка суму більше 0'
+					}
+					else if (this.inputMoney === null) {
+						this.errorMessage = 'Введіть суму'
+					}
+					else {
+						this.colorBalance = 'color: green'
+						this.balance += parseFloat(this.inputMoney) * 0.97 // врахування комісії
+						this.inputMoney = null
+					}
+				},
+				withdrawMoney() {
+					if (this.inputMoney > this.balance) {
+						this.errorMessage = 'Недостатньо коштів на рахунку'
+					}
+					else if (this.inputMoney < 0) {
+						this.errorMessage = 'Введіть будь ласка суму більше 0'
+					}
+					else if (this.inputMoney === null) {
+						this.errorMessage = 'Введіть суму'
+					}
+					else {
+						this.colorBalance = 'color: red'
+						this.balance -= parseFloat(this.inputMoney) * 0.97
+						this.inputMoney = null
+					}
+
+				}
+			},
+			computed: {
+				showBalance() {
+					return (this.balance).toFixed(2)
+				},
+				percentServiceInteres() {
+					if (this.inputMoney < 0) {
+						return 0
+					}
+					return (this.inputMoney * 0.03).toFixed(2)// комісія 3 відсотки
+				},
+				dollarSum() {
+					return (this.balance / dollarRate).toFixed(2)
+				},
+				evroSum() {
+					return (this.balance / evroRate).toFixed(2)
+				},
+				colorDollar() {
+					return this.dollarSum > 100 ? 'color: green' : 'color: red'
+				},
+				colorEvro() {
+					return this.evroSum > 100 ? 'color: green' : 'color: red'
+				},
+
+			}
+		}).mount('#app')
+	</script>
+</body>
+
+</html>

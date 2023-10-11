@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="css/style.css" />
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Task 2</title>
+</head>
+
+<body>
+	<h1><a href="index.html">Home</a></h1>
+	<div id="app">
+		<label for="">
+			Введіть номер місяця(1-12)
+			<input type="number" v-model="monthNum">
+		</label>
+		<div>{{message}}</div>
+		<div></div>
+		<img :src="getImg()" alt="">
+	</div>
+	<script>
+		//Задача 2. Вводиться номер місяця. Автоматично виводити рекомендований одяг (зима – пальто, літо – шорти ….). Також автоматично виводити зображення з відповідним зображенням лісу (зима – ліс зі снігом, осінь – жовтий ліс, …).
+
+		const { createApp } = Vue
+
+		createApp({
+			data() {
+				return {
+					monthNum: null,
+					message: null,
+					seasons: ['img/winter.jpg', 'img/spring.jpg', 'img/summer.jpg', 'img/autumn.jpg']
+				}
+			},
+			methods: {
+				getImg() {
+					switch (this.monthNum) {
+						case 12:
+						case 1:
+						case 2:
+							this.message = 'Одягніть пальто'
+							return this.seasons[0]
+							break;
+						case 3:
+						case 4:
+						case 5:
+							this.message = 'Одягніть жилетку'
+							return this.seasons[1]
+							break;
+						case 6:
+						case 7:
+						case 8:
+							this.message = 'Одягніть шорти'
+							return this.seasons[2]
+							break;
+						case 9:
+						case 10:
+						case 11:
+							this.message = 'Візьміть парасольку'
+							return this.seasons[3]
+							break;
+						default:
+
+							break;
+					}
+				}
+			},
+			computed: {
+
+			},
+		}).mount('#app')
+	</script>
+</body>
+
+</html>
