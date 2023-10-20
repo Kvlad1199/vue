@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Task 3</title>
+	<style>
+		.cart {
+			display: flex;
+			gap: 5px;
+			flex-direction: column;
+			padding: 15px;
+
+		}
+
+		.correctUserAnswer {
+			border: 1px solid green;
+			-webkit-box-shadow: 4px 26px 145px 49px green;
+			-moz-box-shadow: 4px 26px 145px 49px green;
+			box-shadow: 4px 26px 145px 49px green;
+		}
+
+		.unCorrectUserAnswer {
+			-webkit-box-shadow: 4px 26px 145px 49px red;
+			-moz-box-shadow: 4px 26px 145px 49px red;
+			box-shadow: 4px 26px 145px 49px red;
+
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1><a href="index.html">Home</a></h1>
+
+	<div id="app" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+		<div class="cart" :class="statusColor">
+			<img :src="randElem.img" alt="" width="250" height="250">
+			<h3 style="text-align: center;">{{randElem.ukrainianWord}}</h3>
+			<label for="" style="text-align: center;">
+				Ваш переклад:
+
+			</label>
+			<input v-model="inputWord" autocomplete="off" type="text" name="form[]" data-error="Помилка" placeholder=""
+				class="input">
+			<div>{{message}}</div>
+			<button @click="checkAnswer">Перевірити</button>
+			<button @click="nextWord">Наступне слово</button>
+		</div>
+	</div>
+	<script>
+		//Задача 3.Елемент тренажера англійської. 
+		//Виводимо зображення елемента і слово. 
+		//Користувач вводить відповідь.
+		// Якщо вірно – відтворюємо фразу «Добре. Молодець!» (і додаємо зелену рамку до елемента),
+		// якщо ні - то відтворюємо фразу «Невірно, спробуйте ще раз» (і додаємо червону рамку).
+
+		const { createApp } = Vue
+
+		const dataList = [
+			{ id: 1, englishWord: "chair", ukrainianWord: "стілець", img: 'img/task_3/chair.jpg' },
+			{ id: 2, englishWord: "table", ukrainianWord: "стіл", img: 'img/task_3/table.jpg' },
+			{ id: 3, englishWord: "sofa", ukrainianWord: "диван", img: 'img/task_3/sofa.jpg' },
+			{ id: 4, englishWord: "bed", ukrainianWord: "ліжко", img: 'img/task_3/bed.jpg' },
+			{ id: 5, englishWord: "wardrobe", ukrainianWord: "шафа", img: 'img/task_3/wardrobe.jpg' },
+			{ id: 6, englishWord: "bookshelf", ukrainianWord: "книжкова полиця", img: 'img/task_3/bookshelf.jpg' },
+			{ id: 7, englishWord: "desk", ukrainianWord: "письмовий стіл", img: 'img/task_3/desk.jpg' },
+			{ id: 8, englishWord: "dresser", ukrainianWord: "комод", img: 'img/task_3/dresser.jpg' },
+			{ id: 9, englishWord: "nightstand", ukrainianWord: "тумбочка", img: 'img/task_3/nightstand.jpg' },
+			{ id: 10, englishWord: "lamp", ukrainianWord: "лампа", img: 'img/task_3/lamp.jpg' }
+		];
+
+		createApp({
+
+			data() {
+				return {
+					inputWord: null,
+					message: null,
+					randElem: this.randWord(),
+					statusColorAnswer: null,
+				}
+			},
+			computed: {
+				statusColor() {
+					if (this.statusColorAnswer === true) {
+						return 'correctUserAnswer'
+					} else if (this.statusColorAnswer === false) {
+						return 'unCorrectUserAnswer'
+					}
+					else return null
+				}
+			},
+			methods: {
+				randWord() {
+					console.log(dataList);
+					let randIndex = Math.floor(Math.random() * dataList.length);
+					return dataList[randIndex]
+				},
+				checkAnswer() {
+					console.log('1111');
+
+					if (this.inputWord && this.inputWord.toLowerCase() === this.randElem.englishWord) {
+						this.message = 'Добре. Молодець!'
+						this.statusColorAnswer = true
+					}
+					else {
+						this.message = 'Невірно, спробуйте ще раз'
+						this.statusColorAnswer = false
+						console.log(this.inputWord);
+						console.log(this.randElem.englishWord);
+
+
+					}
+				},
+				nextWord() {
+					this.inputWord = null
+					this.message = null
+					this.randElem = this.randWord()
+					this.statusColorAnswer = null
+				}
+			},
+
+
+		}).mount('#app')
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Task 5</title>
+	<style>
+		/* --------- ОБНУЛЕННЯ СТИЛІВ ТЕГІВ ------------ */
+		*,
+		*::before,
+		*::after {
+			margin: 0;
+			padding: 0;
+			border: none;
+			box-sizing: border-box;
+		}
+
+		li {
+			list-style: none;
+		}
+
+		a {
+			color: inherit;
+		}
+
+		a:link,
+		a:visited {
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: none;
+		}
+
+		img {
+			vertical-align: top;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			font-weight: inherit;
+			font-size: inherit;
+		}
+
+		input,
+		button,
+		textarea {
+			font-family: inherit;
+			font-size: inherit;
+		}
+
+		button {
+			cursor: pointer;
+			color: inherit;
+			background-color: inherit;
+		}
+
+		body {
+			padding: 60px;
+		}
+
+		.app__container {}
+
+		.app__container:not(:last-child) {
+			margin-bottom: 20px;
+		}
+
+		.app__top {
+			display: flex;
+			gap: 20px;
+			align-items: center;
+		}
+
+		.app__top:not(:last-child) {
+			margin-bottom: 10px;
+		}
+
+		.app__image {}
+
+		.app__image img {
+			border-radius: 50%;
+			width: 30px;
+			height: 30px;
+		}
+
+		.app__h3 {}
+
+		.app__h3:not(:last-child) {
+			margin-bottom: 5px;
+		}
+
+		.app__h4 {}
+
+		.app__main {}
+
+		.app__h2 {
+			font-size: 18px;
+			color: rgb(139, 139, 220);
+		}
+
+		.app__h2:not(:last-child) {
+			margin-bottom: 5px;
+		}
+
+		.app__text {}
+
+		.app__text p {
+			font-size: 12px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1 style="margin-bottom: 15px; font-size: 26px;"><a href="index.html">Home</a></h1>
+
+	<div id="app">
+		<div v-for="site in sitesList" :key="site.id" class="app__container">
+			<a :href="site.link" class="app__top">
+				<div class="app__image">
+					<img :src="site.img" alt="">
+				</div>
+				<div>
+					<h3 class="app__h3">{{site.h3}}</h3>
+					<h4 class="app__h4">{{site.link}}</h4>
+				</div>
+			</a>
+			<div class="app__main">
+				<h2 class="app__h2">
+					<a :href="site.link"> {{site.h2}}</a>
+				</h2>
+				<div class="app__text">
+					<p>{{site.description}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		//Задача 5. Самостійно сформуйте масив даних та виведіть фрагмент на зразок поданого (дані не обов’язково повинні співпадати) 
+
+		const data = [
+			{
+				id: 1,
+				img: "img/task_5/vue.png",
+				h2: "Vue.js - The Progressive JavaScript Framework | Vue.js",
+				h3: "Vue.js",
+				link: "https://v3.ru.vuejs.org/",
+				description: "Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation.Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation.Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation.Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation.Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation.Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation.Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation.Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation.Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation.Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation.Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation."
+			},
+			{
+				id: 2,
+				img: "img/task_5/vue2.jpg",
+				h2: "Vue.js",
+				h3: "Vue.js",
+				link: "https://v3.ru.vuejs.org/",
+				description: "JavaScript фреймворк. Доступний, продуктивний і універсальний фреймворк для створення користувацьких веб інтерфейсів. Чому Vue Розпочати Швидкий старт."
+			},
+			{
+				id: 3,
+				img: "img/task_5/vue3.jpeg",
+				h2: "Vue.js - Framework",
+				h3: "Vue.js",
+				link: "https://v3.ru.vuejs.org/",
+				description: "Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation."
+			},
+			{
+				id: 4,
+				img: "img/task_5/vue4.png",
+				h2: "Why Vue.js?",
+				h3: "Vue.js",
+				link: "https://v3.ru.vuejs.org/",
+				description: "JavaScript фреймворк. Доступний, продуктивний і універсальний фреймворк для створення користувацьких веб інтерфейсів. Чому Vue Розпочати Швидкий старт."
+			},
+			{
+				id: 5,
+				img: "img/task_5/vue5.jpg",
+				h2: "Vue.js - JavaScript Framework | Vue.js",
+				h3: "Vue.js",
+				link: "https://v3.ru.vuejs.org/",
+				description: "Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation."
+			},
+		]
+		const { createApp } = Vue
+
+		createApp({
+			data() {
+				return {
+
+				}
+			},
+
+			computed: {
+				sitesList() {
+					return data
+				}
+			},
+			methods: {
+
+			}
+		}).mount('#app')
+	</script>
+</body>
+
+</html>

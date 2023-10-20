@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="css/style.css" />
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Task 2</title>
+</head>
+
+<body>
+	<h1><a href="index.html">Home</a></h1>
+	<div id="app">
+		<select v-model="ticketType">
+			<option value="1">Бізнес</option>
+			<option value="2">Економ</option>
+		</select>
+		<div v-if="ticketType === '1'" style="background: url(img/bysiness.jpg)  no-repeat; padding: 100px;">
+			<select v-model="businessType">
+				<option value="1">Газета</option>
+				<option value="2">Коньяк</option>
+			</select>
+			<div v-if="businessType === '2'">
+				<button>Yes</button>
+				<button>No</button>
+			</div>
+		</div>
+		<div v-if="ticketType==='2'" style="background: url(img/sky.jpg) no-repeat; padding: 50px;">
+			<div class="checkbox">
+				<input id="c_1" data-error="Помилка" class="checkbox__input" type="checkbox" value="1" name="form[]">
+				<label for="c_1" class="checkbox__label"><span class="checkbox__text">Пиво</span></label>
+			</div>
+			<div class="checkbox">
+				<input id="c_2" data-error="Помилка" class="checkbox__input" type="checkbox" value="2" name="form[]">
+				<label for="c_2" class="checkbox__label"><span class="checkbox__text">Чіпси</span></label>
+			</div>
+			<div class="checkbox">
+				<input id="c_3" data-error="Помилка" class="checkbox__input" type="checkbox" value="3" name="form[]">
+				<label for="c_3" class="checkbox__label"><span class="checkbox__text">Сухарі</span></label>
+			</div>
+		</div>
+	</div>
+	<script>
+		//Задача 2. З випадаючого списку вибираємо клас квитка у літаку. Якщо 
+		// 1) бізнес -  виводимо елементи для вибору газети та коньяку (якщо вибрано коньяк, то запропонувати закуску (так/ні)), на фоні зображення бізнес кают 
+		// 2) економ – виводимо елементи для вибору типу пива і чипсів, на фоні хмарки.
+
+		const { createApp } = Vue
+
+		createApp({
+			data() {
+				return {
+					ticketType: null,
+					businessType: null,
+				}
+			},
+			methods: {
+
+
+			},
+			computed: {
+
+			},
+		}).mount('#app')
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <link rel="stylesheet" href="css/style.css"> -->
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Task 6</title>
+
+	<style>
+		/* --------- ОБНУЛЕННЯ СТИЛІВ ТЕГІВ ------------ */
+		*,
+		*::before,
+		*::after {
+			margin: 0;
+			padding: 0;
+			border: none;
+			box-sizing: border-box;
+		}
+
+		li {
+			list-style: none;
+		}
+
+		a {
+			color: inherit;
+		}
+
+		a:link,
+		a:visited {
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: none;
+		}
+
+		img {
+			vertical-align: top;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			font-weight: inherit;
+			font-size: inherit;
+		}
+
+		input,
+		button,
+		textarea {
+			font-family: inherit;
+			font-size: inherit;
+		}
+
+		button {
+			cursor: pointer;
+			color: inherit;
+			background-color: inherit;
+		}
+
+		body {
+			padding: 60px;
+			background-color: #492c7599;
+		}
+
+
+		.container {
+			display: flex;
+
+		}
+
+		.list {
+			border: 1px solid black;
+			min-height: 200px;
+			min-width: 200px;
+		}
+
+		.li-item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		button {
+			padding: 1px;
+			border: 1px solid black;
+		}
+	</style>
+</head>
+
+<body>
+	<h1><a href="index.html">Home</a></h1>
+	<div id="app">
+		<div>
+			<label>
+				Нова замовлена страва:
+				<input type="text" v-model="inputDish">
+			</label>
+			<button @click="addToWaitingList">Додати</button>
+		</div>
+		<div class="container">
+			<div class="list">
+				<h2>Очікують на виконання</h2>
+				<ul>
+					<li v-for="(dish,index) in waitingList" :key="index" class="li-item">
+						{{dish}}
+						<button @click="addToProcessingList(index)">Готувати</button>
+					</li>
+				</ul>
+			</div>
+			<div class="list">
+				<h2>Виконуються</h2>
+				<ul>
+					<li v-for="(dish,index) in processingList" :key="index" class="li-item">
+						{{dish}}
+						<button @click="addToCompletedList(index)">Приготовлено</button>
+					</li>
+				</ul>
+			</div>
+			<div class="list">
+				<h2>Готові до виносу</h2>
+				<ul>
+					<li v-for="(dish,index) in completedList" :key="index" class="li-item">
+						{{dish}}
+						<button @click="removeFromCompletedList(index)">Подано</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<script>
+
+
+		// Задача 6.Задача. На кухню поступають замовлення. Спочатку ми додаємо їх у список “Очікують на виконання”, якщо повар береться робити — замовлення переходить у список “Виконуються”,   якщо замовлення виконано — переходить у список “Готові до виносу”. Якщо натиснути на “Подано” - страва зникає з таблиці
+		const { createApp } = Vue
+
+
+
+
+		createApp({
+			data() {
+				return {
+					inputDish: null,
+					waitingList: [],
+					processingList: [],
+					completedList: [],
+				}
+			},
+
+
+
+			// methods: {
+			// 	addToWaitingList() {
+			// 		this.waitingList.push(this.inputDish)
+			// 		this.inputDish = null
+			// 	},
+			// 	addToProcessingList(index) {
+			// 		this.processingList.push(this.waitingList[index])
+			// 		this.waitingList.splice(index, 1)
+			// 	},
+			// 	addToCompletedList(index) {
+			// 		this.completedList.push(this.processingList[index])
+			// 		this.processingList.splice(index, 1)
+			// 	},
+			// 	removeFromCompletedList(index) {
+			// 		this.completedList.splice(index, 1)
+			// 	}
+
+			// },
+			methods: {
+				addToWaitingList() {
+					if (this.inputDish) {
+						this.waitingList.push(this.inputDish)
+						this.inputDish = null
+					}
+				},
+				addToProcessingList(index) {
+					this.processingList.push(this.waitingList[index])
+					this.waitingList.splice(index, 1)
+				},
+				addToCompletedList(index) {
+					this.completedList.push(this.processingList[index])
+					this.processingList.splice(index, 1)
+				},
+				removeFromCompletedList(index) {
+					this.completedList.splice(index, 1)
+				}
+			},
+		}).mount('#app')
+	</script>
+</body>
+
+</html>

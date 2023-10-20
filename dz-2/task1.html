@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Task 1</title>
+</head>
+
+<body>
+	<h1><a href="index.html">Home</a></h1>
+
+	<div id="app">
+		<label for="">
+			Логін
+			<input type="text" v-model="inputLogin">
+		</label>
+		<br>
+		<label for="">
+			Пароль
+			<input type="text" v-model="inputPass">
+		</label>
+		<br>
+		<!-- <button>Go</button> -->
+		<div v-if="check">:-)</div>
+		<div v-else-if="inputLogin === 'Іван'" style="color: blue;">Помилка - введений логін Іван(синій)</div>
+		<div v-else style="color: red;">Помилка(червоний)</div>
+	</div>
+
+
+
+
+	<script>
+		//Задача 1.
+		//Вводимо логіна і пароль. Якщо логін вірний відображаємо смайл. Якщо ні, то:
+		// 1) якщо логін = Іван – колір повідомлення про помилку синій
+		// 2) якщо хтось інший, то колір повідомлення червоний
+
+
+
+		const { createApp } = Vue
+
+		const arrOfData = [
+			{
+				login: "login111",
+				password: "pass1"
+			},
+			{
+				login: "login222",
+				password: "pass2"
+			},
+			{
+				login: "login333",
+				password: "pass3"
+			},
+			{
+				login: "login444",
+				password: "pass4"
+			},
+		]
+
+		createApp({
+			data() {
+				return {
+					inputLogin: null,
+					inputPass: null
+				}
+			},
+
+			computed: {
+				data() {
+					return arrOfData
+				},
+				check() {
+					return this.data.find(
+						(el) => el.login === this.inputLogin && el.password === this.inputPass
+					)
+				},
+
+			},
+			methods: {
+
+			}
+		}).mount('#app')
+	</script>
+</body>
+
+
+
+
+</html>

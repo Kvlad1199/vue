@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Task 4</title>
+</head>
+
+<body>
+	<h1><a href="index.html">Home</a></h1>
+	<div id="app">
+		<ul>
+			<li v-for="worker in list" :key="worker.id">
+				{{worker.name}}: {{worker.salary}}
+			</li>
+		</ul>
+	</div>
+	<script>
+
+
+		// Задача 4. Вивести список як маркований список з елементами у форматі (name: salary)
+
+		const { createApp } = Vue
+
+
+		const workersList2 = [
+			{
+				id: '111',
+				name: 'Іванов',
+				salary: 10000,
+			},
+			{
+				id: '112',
+				name: 'Петров',
+				salary: 20000,
+			},
+			{
+				id: '113',
+				name: 'Сидоров',
+				salary: 50000,
+			},
+		]
+
+		createApp({
+			data() {
+				return {
+
+				}
+			},
+
+			methods: {
+
+			},
+			computed: {
+				list() {
+					return workersList2
+				}
+
+			}
+		}).mount('#app')
+	</script>
+</body>
+
+</html>
