@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="css/style.css" />
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Task 2</title>
+</head>
+
+<body>
+	<h1><a href="index.html">Home</a></h1>
+	<div id="app">
+		<div class="lists__container">
+			<div class="list">
+				<span>Марка</span>
+				<select v-model="selectedName">
+					<option v-for="name in nameList" :key="name">{{name}}</option>
+				</select>
+			</div>
+			<div class="list">
+				<span>Рік випуску</span>
+				<select v-model="selectedYear">
+					<option v-for="year in yearsList" :key="year">{{year}}</option>
+				</select>
+			</div>
+			<div class="res-list">
+				<ol v-if="filteredList.length">
+					<li v-for="car in filteredList" :key="car.id">
+						{{ car.name }} - {{car.year}} - {{car.price}}$
+					</li>
+				</ol>
+				<div v-else>Таких немає</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		//Задача 2.Дано список автомобілів (марка, рік випуску, ціна). Сформувати елементи для фільтрування з використанням випадаючого списку (контент цих випадаючих списків сформувати у залежності від переданого списку).
+		const { createApp } = Vue
+
+		createApp({
+			data() {
+				return {
+					carList: [
+						{
+							id: 1,
+							price: 25000,
+							name: 'Mercedes',
+							year: 2012
+						},
+						{
+							id: 2,
+							price: 15000,
+							name: 'Kia',
+							year: 2015
+						},
+						{
+							id: 3,
+							price: 23000,
+							name: 'BMW',
+							year: 2017
+						},
+						{
+							id: 4,
+							price: 35000,
+							name: 'Audi',
+							year: 2020
+						},
+						{
+							id: 5,
+							price: 19000,
+							name: 'Mercedes',
+							year: 2019
+						},
+						{
+							id: 6,
+							price: 7000,
+							name: 'Opel',
+							year: 2015
+						},
+						{
+							id: 7,
+							price: 25000,
+							name: 'Audi',
+							year: 2018
+						},
+
+					],
+					selectedYear: null,
+					selectedName: null,
+				}
+			},
+			methods: {
+
+
+			},
+			computed: {
+				yearsList() {
+					return [...new Set(this.carList.map(carObj => parseInt(carObj.year)))].sort()
+				},
+				nameList() {
+					return [...new Set(this.carList.map(carObj => carObj.name))].sort()
+				},
+				filteredList() {
+					if (!this.selectedName && !this.selectedYear)
+						return this.carList
+					else if (this.selectedName && !this.selectedYear) {
+						return this.carList.filter(car => car.name === this.selectedName)
+					}
+					else if (this.selectedYear && !this.selectedName) {
+						return this.carList.filter((car) => car.year === parseInt(this.selectedYear))
+					}
+					else {
+						return this.carList.filter(car => (car.year === parseInt(this.selectedYear)) && (car.name === this.selectedName))
+					}
+				}
+
+			},
+		}).mount('#app')
+	</script>
+</body>
+
+</html>

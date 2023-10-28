@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Task 1</title>
+	<style>
+		.select {
+			border: 1px solid red;
+			padding: 2px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1><a href="index.html">Home</a></h1>
+
+	<div id="app">
+		<div class="wrapper">
+			<div class="lists">
+				<div class="list__container">
+					<h2 class="list__title">Хлопці</h2>
+					<ol>
+						<li v-for="male in maleList" :key="male.id" @click="selectPerson(maleList,male.id)" :class="{
+							'select':male.id === selectedMale
+						}">
+							{{male.name}}
+						</li>
+					</ol>
+				</div>
+				<div class="list__container">
+					<h2 class="list__title">Дівчата</h2>
+					<ol>
+						<li v-for="female in femaleList" :key="female.id" @click="selectPerson(femaleList,female.id)" :class="{
+							'select':female.id === selectedFemale
+						}">
+							{{female.name}}
+						</li>
+					</ol>
+				</div>
+				<button :disabled="!isButtonDisabled" @click="addCouple()">Додати</button>
+			</div>
+			<div class="selected-list">
+				<h2 class="selected-list__title">Обрані пари</h2>
+				<ol>
+					<li v-for="people in selectedList" :key="people.id" @click="deleteCouple(people.id)">
+						{{people.male}} - {{people.female}}
+					</li>
+				</ol>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<script>
+		//Задача 1.
+		//  Пари для танців. Поступово вибираємо хлопця, дівчину і додаємо у обрані пари. Пару можна видалити. Поки не вибрано хлопця і дівчину кнопка «Додати» заблокована.  Якщо не вистачає хлопців або дівчат вибір також блокується.
+
+
+
+		const { createApp } = Vue
+
+
+		createApp({
+			data() {
+				return {
+					maleList: [
+						{
+							id: 1,
+							name: "Ivan"
+						},
+						{
+							id: 2,
+							name: "Igor"
+						},
+						{
+							id: 3,
+							name: "Vlad"
+						},
+						{
+							id: 4,
+							name: "Valeriy"
+						},
+						{
+							id: 5,
+							name: "Volodymyr"
+						},
+					],
+					femaleList: [
+						{
+							id: 1,
+							name: "Inna"
+						},
+						{
+							id: 2,
+							name: "Tanya"
+						},
+						{
+							id: 3,
+							name: "Olga"
+						},
+						{
+							id: 4,
+							name: "Olena"
+						},
+
+					],
+					selectedList: [
+						{
+							id: 1,
+							male: "Oleg",
+							female: "Tonya"
+						},
+					],
+					selectedMale: null,
+					selectedFemale: null,
+					selectedCouple: null,
+
+				}
+			},
+			computed: {
+				isButtonDisabled() {
+					return this.selectedMale !== null && this.selectedFemale !== null
+				}
+			},
+			methods: {
+				selectPerson(arr, id) {
+					if (arr === this.maleList)
+						this.selectedMale = id
+					else if (arr === this.femaleList)
+						this.selectedFemale = id
+					else if (arr === this.selectedList)
+						this.selectedCouple = id
+				},
+				addCouple() {
+					const selectedMan = this.maleList.find(man => man.id === this.selectedMale)
+					const selectedWoman = this.femaleList.find(woman => woman.id === this.selectedFemale)
+
+					if (selectedMan && selectedWoman) {
+						this.selectedList.push(
+							{
+								id: new Date().getTime(),
+								male: selectedMan.name,
+								female: selectedWoman.name,
+							}
+						)
+					}
+
+					this.maleList = this.maleList.filter(man => man.id !== selectedMan.id)
+					this.femaleList = this.femaleList.filter(woman => woman.id !== selectedWoman.id)
+
+					this.selectedMale = null
+					this.selectedFemale = null
+
+				},
+				deleteCouple(id) {
+
+					this.selectedList = this.selectedList.filter(couple => couple.id !== id)
+				}
+			}
+		}).mount('#app')
+	</script>
+</body>
+
+
+
+
+</html>
